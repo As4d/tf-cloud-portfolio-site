@@ -27,6 +27,9 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
   default_root_object = "index.html"
 
   default_cache_behavior {
+    // Using the CachingOptimized managed policy ID
+    // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-cache-policies.html#managed-cache-caching-optimized 
+    cache_policy_id  = "658327ea-f89d-4fab-a63d-7e88639e58f6"
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.origin_id
