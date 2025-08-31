@@ -3,10 +3,6 @@ resource "aws_s3_bucket" "static_portfolio_site" {
   bucket = var.bucket_name
 }
 
-
-
-
-
 // build a bucket policy that allows cloudfront to read the bucket content only
 data "aws_iam_policy_document" "allow_cloudfront_service_principal_readonly" {
   statement {
