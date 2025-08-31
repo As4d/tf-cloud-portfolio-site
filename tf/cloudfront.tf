@@ -49,6 +49,7 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
 
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.portfolio_site_cert.arn
+    ssl_support_method = "sni-only"
   }
 
   tags = {
