@@ -6,7 +6,7 @@ data "aws_route53_zone" "portfolio_site_hosted_zone" {
 
 // Create record pointing to CloudFront
 resource "aws_route53_record" "portfolio_site" {
-  zone_id = aws_route53_zone.portfolio_site_hosted_zone.zone_id
+  zone_id = data.aws_route53_zone.portfolio_site_hosted_zone.domain_name
   name    = var.portfolio_site_domain_name
   type    = "A"
 
