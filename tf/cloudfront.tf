@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = local.origin_id
 
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
     compress               = true
     min_ttl                = 0
     default_ttl            = 3600
