@@ -41,6 +41,11 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.redirect_direct_cloudfront_traffic.arn
+    }
   }
 
   restrictions {
@@ -58,4 +63,13 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
   tags = {
     Name = "Static Portfolio Site S3 Distribution"
   }
+}
+
+// Redirect traffic to route53 
+resource "aws_cloudfront_function" "redirect_direct_cloudfront_traffic" {
+  name    = "redirect-direct-cloudfront-traffic"
+  runtime = "cloudfront-js-2.0"
+  comment = "Redirect traffic from CloudFront domain to asadalikhan.co.uk"
+  publish = true
+  code    = file("${path.module}/scripts/redirect.js")
 }
