@@ -21,6 +21,8 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
     origin_id                = local.origin_id
   }
 
+  aliases = [var.portfolio_site_domain_name]
+
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Static Portfolio Site S3 Distribution"
@@ -48,8 +50,9 @@ resource "aws_cloudfront_distribution" "static_portfolio_site_s3" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.portfolio_site_cert.arn
-    ssl_support_method = "sni-only"
+    acm_certificate_arn      = aws_acm_certificate.portfolio_site_cert.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.3_2025"
   }
 
   tags = {
