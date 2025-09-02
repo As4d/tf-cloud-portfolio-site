@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "static_portfolio_site" {
   bucket = var.bucket_name
 }
 
-// block public access
+// Block public access
 resource "aws_s3_bucket_public_access_block" "static_portfolio_site" {
   bucket = aws_s3_bucket.static_portfolio_site.id
 
@@ -13,7 +13,16 @@ resource "aws_s3_bucket_public_access_block" "static_portfolio_site" {
   restrict_public_buckets = true
 }
 
-// build a bucket policy that allows cloudfront to read the bucket content only
+// Enable bucket versioning
+
+resource "aws_s3_bucket_versioning" "static_portfolio_site" {
+  bucket = aws_s3_bucket.static_portfolio_site.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+// Build a bucket policy that allows cloudfront to read the bucket content only
 data "aws_iam_policy_document" "allow_cloudfront_service_principal_readonly" {
   statement {
     sid    = "AllowCloudFrontServicePrincipalReadOnly"
